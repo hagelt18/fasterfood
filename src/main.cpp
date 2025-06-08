@@ -8,6 +8,9 @@
 #include <stdio.h>
 
 
+BITMAP* mouth0_img = NULL;
+BITMAP* mouth1_img = NULL;
+ 
 /////////////////////////////////////////////////////////////////////
 // MAIN FUNCTION
 /////////////////////////////////////////////////////////////////////
@@ -84,12 +87,12 @@ void drawmouth()
 	//check mouth and load bitmap
 	if (mouth.open == 0)
 	{
-		mouth_img = load_bitmap("../assets/mouth0.bmp",NULL);
+		mouth_img = mouth0_img;
 		mouth.CO *= -1;
 	}
 	if (mouth.open == 10)
 	{
-		mouth_img = load_bitmap("../assets/mouth1.bmp",NULL);
+		mouth_img = mouth1_img;
 		mouth.CO *= -1;
 	}
     
@@ -137,8 +140,9 @@ void movemouth(){
         mouth.speedy = 0;
     }
 
-    mouth.x += spdx;
-    mouth.y += spdy;
+	float mouthSpeedFactor = 0.25;
+    mouth.x += spdx * mouthSpeedFactor;
+    mouth.y += spdy * mouthSpeedFactor;
 
 }
 
@@ -157,8 +161,8 @@ void getinput()
     if (key[KEY_DOWN])  down();
     if (key[KEY_LEFT])  left();
 
-    //short delay after keypress        
-    rest(20);
+    // //short delay after keypress        
+    // rest(20);
 }
 
 void up()
@@ -431,7 +435,10 @@ void setupmouth()
 	mouth.open = 1;
 	mouth.CO = 1;
 
-	mouth_img = load_bitmap("../assets/mouth0.bmp",NULL);
+	// mouth_img = load_bitmap("../assets/mouth0.bmp",NULL);
+	mouth0_img = load_bitmap("../assets/mouth0.bmp",NULL);
+	mouth1_img = load_bitmap("../assets/mouth1.bmp",NULL);
+	mouth_img = mouth0_img;
 }
 
 
